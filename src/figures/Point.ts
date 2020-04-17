@@ -7,11 +7,15 @@ export default class Point {
   private x: number;
   private y: number;
 
-  public getX(): number {
+  getX(): number {
     return this.x;
   }
 
-  public getY(): number {
+  getY(): number {
     return this.y;
+  }
+
+  print(): string {
+    return `(${this.x},${this.y})`;
   }
 }

@@ -17,7 +17,7 @@ export default class Circle extends Figure {
     context.fill();
   }
 
-  public getName(): string {
+  getName(): string {
     return "Circle";
   }
 }

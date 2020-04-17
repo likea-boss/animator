@@ -12,12 +12,12 @@ export default class Rect extends Figure {
   private width: number;
   private height: number;
 
-  public render(context: CanvasRenderingContext2D): void {
+  render(context: CanvasRenderingContext2D): void {
     context.fillStyle = this.color.print();
     context.fillRect(this.position.getX(), this.position.getY(), this.width, this.height);
   }
 
-  public getName(): string {
+  getName(): string {
     return "Rect";
   }
 }

@@ -1,42 +1,44 @@
 import { getUUID } from "../services/UUID";
 import Color from "./Color";
 import Point from "./Point";
-import Logger, { LogMethod } from "../services/Logger";
+import EventEmitter, { EmitMethod } from "../services/EventEmitter";
 import Speed from "./Speed";
+import Base from "./Base";
 
-export default abstract class Figure {
+export default abstract class Figure extends Base {
   private static FIGURE_MOVE(uuid: number, name: string) {
     return `MOVE::FIGURE::${name}::${uuid}`;
   }
 
-  private UUID: number = getUUID();
   protected color: Color = new Color(255, 255, 255);
   protected position: Point = new Point(0, 0);
   protected speed: Speed = new Speed(0, 0);
 
-  public applySpeed() {
+  abstract render(context: CanvasRenderingContext2D): void;
+  abstract getName(): string;
+
+  applySpeed() {
     const p: Point = this.speed.getDelta();
     this.position = new Point(this.position.getX() + p.getX(), this.position.getY() + p.getY());
-    Logger.log(Figure.FIGURE_MOVE(this.getUUID(), this.getName()));
+    EventEmitter.emit(Figure.FIGURE_MOVE(this.getUUID(), this.getName()), {});
   }
 
-  public abstract render(context: CanvasRenderingContext2D): void;
-
-  public setColor(color: Color) {
+  setColor(color: Color): this {
     this.color = color;
+    return this;
   }
 
-  public setPosition(p: Point) {
+  setPosition(p: Point): this {
     this.position =  p;
+    return this;
   }
 
-  public setSpeed(s: Speed) {
+  getSpeed(): Speed {
+    return this.speed;
+  }
+
+  setSpeed(s: Speed): this {
     this.speed = s;
+    return this;
   }
-
-  public getUUID(): number {
-    return this.UUID;
-  }
-
-  public abstract getName(): string;
 }
